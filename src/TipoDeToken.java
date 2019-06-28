@@ -1,4 +1,5 @@
 
+
 public enum TipoDeToken {
     Main, Int, Float, Char, If, Else, While, Do, For, //palavras reservadas
     PontoEVirgula, Virgula, AbreChaves, FechaChaves, AbreParentese, FechaParentese, //caracteres especiais

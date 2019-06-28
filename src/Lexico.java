@@ -15,9 +15,9 @@ public class Lexico {
     static String erroTokenNaoReconhecido = "O token lido não foi reconhecido.";
     static String erroNaoFechouAspas = "A aspas simples foi aberta mas não fechada.";
     static String erroCaractereNaoSuportado = "O caractere detectado não é suportado.";
-    static String erroFloatMalFormado = "O número em float está mal formado.";
-    static String erroComentarioNaoFechado = "O comentário multilinha não foi fechado.";
-    static String erroExclamacao = "'!' sempre deve ser seguido de '='.";
+    static String erroFloatMalFormado = "O número em float está mal formado";
+    static String erroComentarioNaoFechado = "O comentário multilinha não foi fechado";
+    static String erroExclamacao = "'!' sempre deve ser seguido de '='";
 
     private Token token;
     private char caractere;
@@ -121,26 +121,26 @@ public class Lexico {
         token.setLexema("");
         //Caracteres especiais
         if (caractere == ';') {
-            token.setTipoToken(TipoDeToken.PontoEVirgula);
+            token.setTipo(TipoDeToken.PontoEVirgula);
         } else if (caractere == '{') {
-            token.setTipoToken(TipoDeToken.AbreChaves);
+            token.setTipo(TipoDeToken.AbreChaves);
         } else if (caractere == '}') {
-            token.setTipoToken(TipoDeToken.FechaChaves);
+            token.setTipo(TipoDeToken.FechaChaves);
         } else if (caractere == '(') {
-            token.setTipoToken(TipoDeToken.AbreParentese);
+            token.setTipo(TipoDeToken.AbreParentese);
         } else if (caractere == ')') {
-            token.setTipoToken(TipoDeToken.FechaParentese);
+            token.setTipo(TipoDeToken.FechaParentese);
         } else if (caractere == ',') {
-            token.setTipoToken(TipoDeToken.Virgula);
+            token.setTipo(TipoDeToken.Virgula);
         } //Operandos Aritméticos/Comentários
         else if (caractere == '=' && lookahead != '=') {
-            token.setTipoToken(TipoDeToken.Igual);
+            token.setTipo(TipoDeToken.Igual);
         } else if (caractere == '+') {
-            token.setTipoToken(TipoDeToken.Soma);
+            token.setTipo(TipoDeToken.Soma);
         } else if (caractere == '-') {
-            token.setTipoToken(TipoDeToken.Subtracao);
+            token.setTipo(TipoDeToken.Subtracao);
         } else if (caractere == '*') {
-            token.setTipoToken(TipoDeToken.Multiplicacao);
+            token.setTipo(TipoDeToken.Multiplicacao);
         } else if (caractere == '/') {
             switch (lookahead) {
                 case '/':
@@ -150,29 +150,29 @@ public class Lexico {
                     detectarComentarioMultilinha();
                     break;
                 default:
-                    token.setTipoToken(TipoDeToken.Divisao);
+                    token.setTipo(TipoDeToken.Divisao);
                     break;
             }
         } //Operandos Relacionais
         else if (caractere == '>') {
-            token.setTipoToken(TipoDeToken.Maior);
+            token.setTipo(TipoDeToken.Maior);
             if (lookahead == '=') {
                 proximoCaractere();
-                token.setTipoToken(TipoDeToken.MaiorIgual);
+                token.setTipo(TipoDeToken.MaiorIgual);
             }
         } else if (caractere == '<') {
-            token.setTipoToken(TipoDeToken.Menor);
+            token.setTipo(TipoDeToken.Menor);
             if (lookahead == '=') {
                 proximoCaractere();
-                token.setTipoToken(TipoDeToken.MenorIgual);
+                token.setTipo(TipoDeToken.MenorIgual);
             }
         } else if (caractere == '=' && lookahead == '=') {
             proximoCaractere();
-            token.setTipoToken(TipoDeToken.IgualIgual);
+            token.setTipo(TipoDeToken.IgualIgual);
         } else if (caractere == '!') {
             if (lookahead == '=') {
                 proximoCaractere();
-                token.setTipoToken(TipoDeToken.Diferente);
+                token.setTipo(TipoDeToken.Diferente);
             } else {
                 proximoCaractere();
                 mensagemDeErro(erroExclamacao);
@@ -198,7 +198,7 @@ public class Lexico {
                 detectarFloat();
             } else {
                 token.setLexema(token.getLexema() + caractere);
-                token.setTipoToken(TipoDeToken.ValorInt);
+                token.setTipo(TipoDeToken.ValorInt);
             }
         } else if (caractere == '.') {
             detectarFloat();
@@ -210,22 +210,21 @@ public class Lexico {
                 proximoCaractere();
                 if (caractere == '\'') {
                     token.setLexema(token.getLexema() + caractere);
-                    token.setTipoToken(TipoDeToken.ValorChar);
+                    token.setTipo(TipoDeToken.ValorChar);
                 } else {
                     proximoCaractere();
                     mensagemDeErro(erroNaoFechouAspas);
-                    token.setTipoToken(TipoDeToken.Erro);
+                    token.setTipo(TipoDeToken.Erro);
                 }
             } else {
                 proximoCaractere();
                 mensagemDeErro(erroCaractereNaoSuportado);
             }
         } else if (caractere == EOF) { //End of File (EOF)
-            token.setTipoToken(TipoDeToken.Fim);
+            token.setTipo(TipoDeToken.Fim);
         } else { //Token não reconhecido
             mensagemDeErro(erroTokenNaoReconhecido);
         }
-        token.setLexemaInicial(token.getLexema());
     }
 
     public void proximoCaractere() throws IOException {
@@ -237,34 +236,34 @@ public class Lexico {
     public void analisarLexema() {
         switch (token.getLexema()) {
             case "main":
-                token.setTipoToken(TipoDeToken.Main);
+                token.setTipo(TipoDeToken.Main);
                 break;
             case "int":
-                token.setTipoToken(TipoDeToken.Int);
+                token.setTipo(TipoDeToken.Int);
                 break;
             case "float":
-                token.setTipoToken(TipoDeToken.Float);
+                token.setTipo(TipoDeToken.Float);
                 break;
             case "char":
-                token.setTipoToken(TipoDeToken.Char);
+                token.setTipo(TipoDeToken.Char);
                 break;
             case "if":
-                token.setTipoToken(TipoDeToken.If);
+                token.setTipo(TipoDeToken.If);
                 break;
             case "else":
-                token.setTipoToken(TipoDeToken.Else);
+                token.setTipo(TipoDeToken.Else);
                 break;
             case "while":
-                token.setTipoToken(TipoDeToken.While);
+                token.setTipo(TipoDeToken.While);
                 break;
             case "do":
-                token.setTipoToken(TipoDeToken.Do);
+                token.setTipo(TipoDeToken.Do);
                 break;
             case "for":
-                token.setTipoToken(TipoDeToken.For);
+                token.setTipo(TipoDeToken.For);
                 break;
             default:
-                token.setTipoToken(TipoDeToken.Id);
+                token.setTipo(TipoDeToken.Id);
                 break;
         }
     }
@@ -278,7 +277,7 @@ public class Lexico {
                 proximoCaractere();
             }
             token.setLexema(token.getLexema() + caractere);
-            token.setTipoToken(TipoDeToken.ValorFloat);
+            token.setTipo(TipoDeToken.ValorFloat);
         } else {
             mensagemDeErro(erroFloatMalFormado);
         }
@@ -289,7 +288,7 @@ public class Lexico {
         while (caractere != '\n') {
             proximoCaractere();
             if (caractere == EOF) {
-                token.setTipoToken(TipoDeToken.Fim);
+                token.setTipo(TipoDeToken.Fim);
                 break;
             }
         }
@@ -317,11 +316,11 @@ public class Lexico {
     public void mensagemDeErro(String mensagem) {
         if (tokens.isEmpty()) {
             System.out.println("Erro na linha " + linha + ",coluna " + (coluna) + ".Nenhum token chegou a ser lido" + "\n" + mensagem);
-            token.setTipoToken(TipoDeToken.Erro);
+            token.setTipo(TipoDeToken.Erro);
             System.exit(-1);
         } else {
-            System.out.println("Erro na linha " + linha + ",coluna " + (coluna) + ".Último token lido com sucesso: " + tokens.getLast().getTipoToken() + "\n" + mensagem);
-            token.setTipoToken(TipoDeToken.Erro);
+            System.out.println("Erro na linha " + linha + ",coluna " + (coluna) + ".Último token lido com sucesso: " + tokens.getLast().getTipo() + "\n" + mensagem);
+            token.setTipo(TipoDeToken.Erro);
             System.exit(-1);
         }
     }
